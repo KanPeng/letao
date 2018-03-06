@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+1、全屏页面的设置：html，body{width:100%;height:100%}
+2、一边固定另一边自适应
+    左边(固定):   width:100px;float:left; 
+    右边(自适应): margin-left:100px;
+
+
+
+    2种：
+    左边(固定):   width:100px;定位; 
+    右边(自适应): width：100%;padding-left:100px;
+
+3、overflow:必须有宽高才会有效
+4、伸缩盒子布局：
+    justifly-content:flex-start/center/flex-end && space-between && space-around  》》》 左中右
+    flex :1 表示占剩余空间的等分
+    flex-direction:column    换轴
+    flex-wrap: wrap          换行
+
+    align-items: flex-start/center/flex-end  设置竖直方向的位置》》》 上中下
+
+    align-self: flex-start/center/flex-end  设置竖直方向的子元素 》》》 上中下
+
+    设置在父元素上：justifly-content & flex-direction & flex-wrap & align-items
+
+    设置在子元素： align-self
+
+5、侧边栏
+静止区间 
+    最大静止值：0
+    最小静止值：父元素高度-子元素高度
+
+滑动区间
+    最大滑动值：最大静止值+100
+    最小滑动值：最小静止值-100
+
+6、tap
+    touchstart :单手指+获取时间+start获取坐标
+    touchend： 单手指+时间差+离开的坐标-start获取坐标 》》》》》字体变红
+
+
+7、点透  fastclick.js
+    click   不会产生点透,但是会有时间延迟
+    touch   会产生点透，而且只能在移动端响应
+    tap     zepto中的tap 有时会产生有时不会产生点透 
+    fastclick.js   不会产生点透&& 不会有延迟&& 可以在pc和移动端都可以相应
+
+8、侧边栏实现点击的3种方法
+    1、common.js  itcast.tap(ulBox,function(e){    
+    2、zepto.js   $(ulBox).on('tap',function(e){
+    3、A、dom:  fastClick.js 
+            a.if ('addEventListener' in document) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    FastClick.attach(document.body);
+                }, false);
+            }
+            b. ulBox.addEventListener("click",function(e){
+       B、zepto:  fastClick.js +zepto.js
+            a. $(function() {
+                    FastClick.attach(document.body);
+                });
+            b. $(ulBox).on('click',function(e){ 或者 ulBox.addEventListener("click",function(e){
+
+9、fastclick.js 
+    1、js文件
+    2、js代码 dom & jquery
+    3、$(ulBox).on('click',function(e){ 或者 ulBox.addEventListener("click",function(e){
+
+10、iscroll.js   
+    注意：最外层的父盒子id='wrapper'需要加position:relative,id='wrapper'的子元素ul清除浮动
+    1、<script type="text/javascript" src="iscroll.js"></script>
+    2、 <div id="wrapper">
+            <ul>
+                <li>...</li>
+                <li>...</li>
+                ...
+            </ul>
+        </div>
+    3、<script type="text/javascript">
+            var myScroll = new IScroll('#wrapper', {
+                mouseWheel: true,
+                scrollbars: true
+            });
+        </script>
+    第二种：id='wrapper'加上overflow: auto;
+
+
+9、media 
+    a、屏幕的区分：
+        超小屏(手机)：0-768
+        小屏(平板)：768-992
+        中屏 (老式台式机)：992-1200
+        大屏：>1200
+
+    b、媒体查询的语法：
+        @media screen and(min-width:768px) and(max-width:992px){
+            body{
+                color:red;
+            }
+        }
+
+
+10、如果写min-width： 从小往大写  向上兼容 向下覆盖
+    如果写max-width： 从大往小写  
+
+11、
+    pc:
+        min-device-width:不变，始终屏幕的宽度
+        min-width ：会随着浏览器窗口的大小改变
+    mobil:
+        min-device-width && min-width  会随着设备窗口的大小改变
+
+
+12、container && container-fluid
+
+container:  margin值大小随屏幕大小改变      container的width    
+        超小屏(手机)：0-768                  width：100%
+        小屏(平板)：768-992                  width：750px
+        中屏 (老式台式机)：992-1200          width：970px
+        大屏：>1200                          width：1170px
+
+
+
+container-fluid:>>>>>      width:100%
+13、栅格系统
+    
+     a、屏幕的区分：栅格系统的书写
+        超小屏(手机)：0-768            col-xs-6
+        小屏(平板)：768-992            col-sm-3  
+        中屏 (老式台式机)：992-1200    col-md-4
+        大屏：>1200                    col-lg-12
+
+    b、如何创建一个栅格
+        a.container && container-fluid
+            b.row
+                c.col-xs-5
+    c、偏移+推+拉
+        offset：原理：设置margin-left
+        push:   原理：定位改变left 往右
+        pull:   原理：定位改变right 往左
+
+    d、响应式hideen-xs 原理：设置 display:none!important; 只会在xs屏生效
+
+14、less安装
+    1、安装node >>>>>   node -v
+    2、安装npm  >>>>>   npm -v 
+    3、安装less  zaixian && 离线
+        在线： npm install -g less   >>>>>    lessc -v
+        离线： 
+            a.复制教学资料中的npm 文件 》A
+            b.找C盘  >  user(用户) > 电脑名(自己起的或者默认的silence) 》 APPDATA (有可能隐藏) > roming  >  npm(粘贴复制的文件A) 
+            c、lessc -v
+
+    4、less解析
+        命令行  
+            a、cd less.less的路径(自己创建的)   注意盘符
+            b、dir /w    (检测路径是不是正确)
+            c、lessc less.less less.css
+
+        webstorm
+            a.在.less文件中输入一个样式》》》》生成.css
+            b.setting(设置)>  tool(工具) >> file Watch (看less有不有)
+            c.在.less文件中输入一个样式》》》》生成.css
+
+</body>
+</html>
